@@ -1,0 +1,23 @@
+POST http://localhost:8080/review/create
+Content-Type: application/json
+
+{
+  "title": "회귀수선전",
+  "content": "회귀수선전 내용",
+  "genre":"무협"
+}
+
+GET http://localhost:3000/review/all
+
+GET http://localhost:3000/review/662781e7fdaf627b32d1c57e
+
+PUT http://localhost:3000/review/662781e7fdaf627b32d1c57e
+Content-Type: application/json
+
+{
+  "title": "수정된 상태입니다",
+  "content": "명작이에요"
+}
+
+
+DELETE http://localhost:8080/review/662781e7fdaf627b32d1c57e

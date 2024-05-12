@@ -1,0 +1,17 @@
+POST http://localhost:3000/user/create
+Content-Type: application/json
+
+{
+    "userId":"test",
+    "password":"test"
+}
+
+GET http://localhost:3000/user/test
+
+DELETE  http://localhost:3000/user/delete
+Content-Type: application/json
+
+{
+    "userId":"test",
+    "password":"test"
+}
