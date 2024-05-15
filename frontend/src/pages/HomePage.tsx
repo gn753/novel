@@ -1,5 +1,11 @@
+import PostList from '@/components/PostList'
+
 const HomePage = () => {
-  return <div>홈페이지</div>
+  return (
+    <>
+      <PostList />
+    </>
+  )
 }
 
 export default HomePage
