@@ -1,3 +1,4 @@
+import PostDetails from '@/components/PostDetails'
 import RootLayout from '@/layouts/RootLayout'
 import HomePage from '@/pages/HomePage'
 import LoginPage from '@/pages/LoginPage'
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <HomePage />
+      },
+      {
+        path: '/post',
+        element: <PostDetails />
       },
       {
         path: '/login',
