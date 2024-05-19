@@ -1,7 +1,12 @@
-import ky from 'ky'
+import axios from 'axios'
 
 const baseUrl = '/api'
 
-const instance = ky.create({ prefixUrl: baseUrl })
+const instance = axios.create({
+  baseURL: baseUrl,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
 
 export default instance

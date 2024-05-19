@@ -4,13 +4,14 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import StarIcon from '@mui/icons-material/Star'
 
-const PostCard = () => {
+const PostCard = ({ ...rest }: any) => {
+  const { title, content, img } = rest
+
   return (
     <Card sx={{ flex: '0 0 calc(33.33% - 8px)' }}>
       <CardMedia
         sx={{ height: 188, width: 'inherit' }}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
+        image={img}
       />
       <CardContent>
         <Typography
@@ -19,7 +20,7 @@ const PostCard = () => {
           component="span"
           color="text.primary"
           fontWeight={700}>
-          회귀수선전
+          {title}
         </Typography>
         <Typography
           variant="body2"
