@@ -7,7 +7,7 @@ Content-Type: application/json
   "genre":"무협"
 }
 
-GET http://localhost:3000/review/all
+GET http://localhost:8080/post/list
 
 GET http://localhost:3000/review/662781e7fdaf627b32d1c57e
 

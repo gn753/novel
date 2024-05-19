@@ -8,7 +8,7 @@ export class CreatePostDto {
   readonly content: string;
 
   @IsArray()
-  readonly genre?: string[];
+  readonly category: string[];
 
   readonly image?: string;
 }

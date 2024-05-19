@@ -12,20 +12,16 @@ export class Post extends Document {
   content: string;
 
   @Prop()
-  genre: string[];
-
-  @Prop({ default: now() })
-  createdDt: Date;
-
-  @Prop({ default: now() })
-  updatedAt: Date;
+  category: string[];
 
   @Prop()
-  image?: string;
+  author: string[];
+
+  @Prop({ default: now() })
+  createdDt?: Date;
+
+  @Prop()
+  img?: string;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
-PostSchema.pre("save", function (next) {
-  this.updatedAt = new Date();
-  next();
-});

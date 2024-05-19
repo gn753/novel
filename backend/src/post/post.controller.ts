@@ -14,7 +14,7 @@ import { PostService } from "src/post/post.service";
 import { CreatePostDto } from "src/schemas/post.dto";
 import { Post as IPost } from "src/schemas/post.schema";
 
-@Controller("Post")
+@Controller("post")
 export class PostController {
   constructor(private postService: PostService) {}
 
@@ -33,7 +33,7 @@ export class PostController {
     }
   }
 
-  @Get("/all")
+  @Get("/list")
   async getPosts(): Promise<IPost[]> {
     return await this.postService.getPosts();
   }
