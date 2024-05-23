@@ -10,7 +10,7 @@ const PostList = () => {
   useEffect(() => {
     getPostAll().then(res => setState(res))
   }, [])
-  console.log(state, 'State')
+
   return (
     <Box
       sx={{

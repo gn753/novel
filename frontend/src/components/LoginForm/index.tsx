@@ -1,8 +1,14 @@
+import { postUserLogin } from '@/api/auths'
 import Input from '@/components/shared/Input'
+import { useRouter } from '@/hooks/useRouter'
+import { useAppDispatch } from '@/store/hooks'
+import { login } from '@/store/loginSlice'
 import { Button as MButton, styled } from '@mui/material'
 
 const LoginForm = () => {
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const dispatch = useAppDispatch()
+  const { routeTo } = useRouter()
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const target = event.target as typeof event.target & {
@@ -12,7 +18,11 @@ const LoginForm = () => {
     const userId = target.userId.value // typechecks!
     const password = target.password.value // typechecks!
 
-    console.log(userId, password)
+    const res = await postUserLogin({ userId, password })
+    if (res) {
+      dispatch(login(res.data))
+      routeTo('/')
+    }
   }
 
   return (

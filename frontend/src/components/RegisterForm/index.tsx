@@ -1,9 +1,12 @@
+import { postUserRegister } from '@/api/auths'
 import Input from '@/components/shared/Input'
 import InputLabel from '@/components/shared/InputLabel'
+import { useRouter } from '@/hooks/useRouter'
 import { Button as MButton, styled } from '@mui/material'
 
 const RegisterForm = () => {
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const { routeTo } = useRouter()
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const target = event.target as typeof event.target & {
@@ -13,7 +16,10 @@ const RegisterForm = () => {
     const userId = target.userId.value // typechecks!
     const password = target.password.value // typechecks!
 
-    console.log(userId, password)
+    const res = await postUserRegister({ userId, password })
+    if (res) {
+      routeTo('/login')
+    }
   }
 
   return (
