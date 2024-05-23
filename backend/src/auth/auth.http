@@ -2,8 +2,8 @@ POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-    "userId":"admin",
-    "password":"admin"
+    "userId":"test",
+    "password":"test"
 }
 
 POST http://localhost:8080/auth/register
@@ -15,3 +15,13 @@ Content-Type: application/json
     
 }
 
+
+GET http://localhost:8080/reviews/66499585be116d4a22e07b6f/comments
+POST http://localhost:8080/reviews/rate
+Content-Type: application/json
+
+{
+  "novelId": "66499585be116d4a22e07b6f",
+  "userId":"test",
+  "rating": 5
+}

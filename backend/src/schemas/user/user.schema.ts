@@ -13,6 +13,9 @@ export class User extends Document {
   @Prop({ default: now() })
   createdDt: Date;
 
+  @Prop({default:false})
+  isAdmin:boolean
+
   async comparePassword(plainPassword: string): Promise<boolean> {
     return await bcrypt.compare(plainPassword, this.password);
   }
