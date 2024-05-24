@@ -1,28 +1,29 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { CreatePostDto } from "src/schemas/post.dto";
-import { Post } from "src/schemas/post.schema";
+import { CreateNovelDto } from "src/schemas/novel.dto";
+import { Novel } from "src/schemas/novel.schema";
+
 
 @Injectable()
-export class PostService {
-  constructor(@InjectModel(Post.name) private postModel: Model<Post>) {}
+export class NovelService {
+  constructor(@InjectModel(Novel.name) private postModel: Model<Novel>) {}
 
-  async createPost(createReviewDto: CreatePostDto) {
-    const createdPost = new this.postModel(createReviewDto);
+  async createPost(createNovelDto: CreateNovelDto) {
+    const createdPost = new this.postModel(createNovelDto);
     return await createdPost.save();
   }
 
-  async getPosts(): Promise<Post[]> {
+  async getPosts(): Promise<Novel[]> {
     return this.postModel.find().exec();
   }
 
-  async getPostById(reviewId: string): Promise<Post> {
+  async getPostById(reviewId: string): Promise<Novel> {
     const review = await this.postModel.findById(reviewId).exec();
     return review;
   }
 
-  async updatePost(id: string, updatePostDto: CreatePostDto): Promise<Post> {
+  async updatePost(id: string, updatePostDto: CreateNovelDto): Promise<Novel> {
     const updatedPost = await this.postModel
       .findByIdAndUpdate(id, updatePostDto, { new: true })
       .exec();

@@ -10,21 +10,22 @@ import {
   Res,
   Delete,
 } from "@nestjs/common";
-import { PostService } from "src/post/post.service";
-import { CreatePostDto } from "src/schemas/post.dto";
-import { Post as IPost } from "src/schemas/post.schema";
+import { NovelService } from "src/novel/novel.service";
+
+import { CreateNovelDto } from "src/schemas/novel.dto";
+import { Novel } from "src/schemas/novel.schema";
 
 @Controller("post")
-export class PostController {
-  constructor(private postService: PostService) {}
+export class NovelController {
+  constructor(private novelService: NovelService) {}
 
   @Post("/create")
   async createPost(
-    @Body() createPostDto: CreatePostDto,
+    @Body() createNovelDto: CreateNovelDto,
     @Res() res
-  ): Promise<IPost> {
+  ): Promise<Novel> {
     try {
-      const createdReview = await this.postService.createPost(createPostDto);
+      const createdReview = await this.novelService.createPost(createNovelDto);
       return res.status(HttpStatus.CREATED).json(createdReview);
     } catch (error) {
       return res
@@ -34,13 +35,13 @@ export class PostController {
   }
 
   @Get("/list")
-  async getPosts(): Promise<IPost[]> {
-    return await this.postService.getPosts();
+  async getPosts(): Promise<Novel[]> {
+    return await this.novelService.getPosts();
   }
 
   @Get("/:id")
-  async getPostbyId(@Param("id") id: string): Promise<IPost> {
-    const review = await this.postService.getPostById(id);
+  async getPostbyId(@Param("id") id: string): Promise<Novel> {
+    const review = await this.novelService.getPostById(id);
     if (!review) {
       throw new NotFoundException("Review not found");
     }
@@ -50,9 +51,9 @@ export class PostController {
   @Put(":id")
   async updateReview(
     @Param("id") id: string,
-    @Body() updatePostDto: CreatePostDto
-  ): Promise<IPost> {
-    const updatedReview = await this.postService.updatePost(id, updatePostDto);
+    @Body() updatePostDto: CreateNovelDto
+  ): Promise<Novel> {
+    const updatedReview = await this.novelService.updatePost(id, updatePostDto);
     if (!updatedReview) {
       throw new NotFoundException("Review not found");
     }
@@ -61,7 +62,7 @@ export class PostController {
 
   @Delete(":id")
   async deletePost(@Param("id") id: string): Promise<void> {
-    const result = await this.postService.deletePost(id);
+    const result = await this.novelService.deletePost(id);
     if (!result) {
       throw new NotFoundException("Review not found");
     }

@@ -1,6 +1,6 @@
 import { IsArray, IsString } from "class-validator";
 
-export class CreatePostDto {
+export class CreateNovelDto {
   @IsString()
   readonly title: string;
 
