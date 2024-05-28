@@ -1,4 +1,4 @@
-import PostDetails from '@/components/PostDetails'
+import NovelDetails from '@/components/NovelDetails'
 import RootLayout from '@/layouts/RootLayout'
 import HomePage from '@/pages/HomePage'
 import LoginPage from '@/pages/LoginPage'
@@ -15,8 +15,8 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-        path: '/post/:id',
-        element: <PostDetails />
+        path: '/novel/details/:id',
+        element: <NovelDetails />
       },
       {
         path: '/login',

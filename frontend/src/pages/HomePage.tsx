@@ -1,9 +1,9 @@
-import PostList from '@/components/PostList'
+import NovelList from '@/components/NovelList'
 
 const HomePage = () => {
   return (
     <>
-      <PostList />
+      <NovelList />
     </>
   )
 }

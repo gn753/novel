@@ -4,13 +4,14 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import StarIcon from '@mui/icons-material/Star'
 import { Link } from 'react-router-dom'
+import { INovelItem } from '@/api/types/novels.interface'
 
-const PostCard = ({ ...rest }: any) => {
+const NovelCard = ({ ...rest }: INovelItem) => {
   const { title, img, _id } = rest
 
   return (
     <Card sx={{ flex: '0 0 calc(33.33% - 8px)' }}>
-      <Link to={`/post/${_id}`}>
+      <Link to={`/novel/details/${_id}`}>
         <CardMedia
           sx={{ height: 188, width: 'inherit' }}
           image={img}
@@ -36,4 +37,4 @@ const PostCard = ({ ...rest }: any) => {
   )
 }
 
-export default PostCard
+export default NovelCard

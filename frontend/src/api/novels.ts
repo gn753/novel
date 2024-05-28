@@ -1,13 +1,13 @@
-import { IPostItem } from './types/posts.interface'
+import { INovelItem } from './types/novels.interface'
 import instance from '@/api/instance'
 
-export const getPostAll: () => Promise<IPostItem[]> = async () => {
-  const res = await instance.get('/post/list')
+export const getNovelAll: () => Promise<INovelItem[]> = async () => {
+  const res = await instance.get('/novels')
   const data = res.data
   return data
 }
 
-export const postRating = async (
+export const postNovelRating = async (
   novelId: string,
   userId: string,
   rating: number

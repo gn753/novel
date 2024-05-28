@@ -9,7 +9,7 @@ import {
 import ReviewList from '../ReviewList'
 import UserRating from './UserRating'
 
-const PostDetails = () => {
+const NovelDetails = () => {
   return (
     <Box>
       <Card sx={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
@@ -44,4 +44,4 @@ const PostDetails = () => {
   )
 }
 
-export default PostDetails
+export default NovelDetails
