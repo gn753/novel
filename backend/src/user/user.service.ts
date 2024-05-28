@@ -2,11 +2,11 @@ import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
-} from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { CreateUserDto } from 'src/schemas/user/create-user.dto';
-import { User } from 'src/schemas/user/user.schema';
+} from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { CreateUserDto } from "src/schemas/create-user.dto";
+import { User } from "src/schemas/user.schema";
 
 @Injectable()
 export class UserService {
@@ -26,13 +26,13 @@ export class UserService {
     // 유저 아이디로 유저를 찾습니다.
     const user = await this.userModel.findOne({ userId: _user.userId }).exec();
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException("User not found");
     }
 
     // 입력된 비밀번호와 등록된 비밀번호를 비교합니다.
     const isPasswordValid = user.password === _user.password;
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException("Invalid credentials");
     }
 
     // 유저를 삭제합니다.
@@ -40,7 +40,7 @@ export class UserService {
       .deleteOne({ userId: _user.userId })
       .exec();
     if (result.deletedCount === 0) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException("User not found");
     }
     return result;
   }

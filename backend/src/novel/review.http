@@ -9,7 +9,7 @@ Content-Type: application/json
 
 GET http://localhost:8080/post/list
 
-GET http://localhost:3000/review/662781e7fdaf627b32d1c57e
+GET http://localhost:3000/reviews/662781e7fdaf627b32d1c57e
 
 PUT http://localhost:3000/review/662781e7fdaf627b32d1c57e
 Content-Type: application/json

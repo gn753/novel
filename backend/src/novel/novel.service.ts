@@ -3,38 +3,52 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreateNovelDto } from "src/schemas/novel.dto";
 import { Novel } from "src/schemas/novel.schema";
-
+import { Review } from "src/schemas/review.schema";
 
 @Injectable()
 export class NovelService {
-  constructor(@InjectModel(Novel.name) private postModel: Model<Novel>) {}
+  constructor(
+    @InjectModel(Novel.name) private novelModel: Model<Novel>,
+    @InjectModel(Review.name) private reviewModel: Model<Review>
+  ) {}
 
-  async createPost(createNovelDto: CreateNovelDto) {
-    const createdPost = new this.postModel(createNovelDto);
-    return await createdPost.save();
+  async create(createNovelDto: CreateNovelDto): Promise<Novel> {
+    const createdNovel = new this.novelModel(createNovelDto);
+    return createdNovel.save();
   }
 
-  async getPosts(): Promise<Novel[]> {
-    return this.postModel.find().exec();
+  async findAll(): Promise<Novel[]> {
+    return this.novelModel.find().exec();
   }
 
-  async getPostById(reviewId: string): Promise<Novel> {
-    const review = await this.postModel.findById(reviewId).exec();
-    return review;
-  }
-
-  async updatePost(id: string, updatePostDto: CreateNovelDto): Promise<Novel> {
-    const updatedPost = await this.postModel
-      .findByIdAndUpdate(id, updatePostDto, { new: true })
+  async findOne(id: string): Promise<Novel> {
+    const novel = await this.novelModel.findById(id).exec();
+    if (!novel) {
+      return null;
+    }
+    // 평균 별점을 계산한다
+    const averageRatingResult = await this.reviewModel
+      .aggregate([
+        { $match: { novelId: id } },
+        { $group: { _id: null, averageRating: { $avg: "$score" } } },
+      ])
       .exec();
 
-    return updatedPost;
+    const averageRating = averageRatingResult.length
+      ? averageRatingResult[0].averageRating
+      : 0;
+    novel.averageRating = averageRating;
+
+    return novel.save();
   }
 
-  async deletePost(id: string): Promise<boolean> {
-    const result = await this.postModel.deleteOne({ _id: id }).exec();
+  async update(id: string, updateNovelDto: CreateNovelDto): Promise<Novel> {
+    return this.novelModel
+      .findByIdAndUpdate(id, updateNovelDto, { new: true })
+      .exec();
+  }
 
-    if (result) return true;
-    else return false;
+  async remove(id: string): Promise<Novel> {
+    return this.novelModel.findByIdAndDelete(id).exec();
   }
 }

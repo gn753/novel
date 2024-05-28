@@ -4,86 +4,38 @@ import {
   Body,
   Get,
   Param,
-  Query,
-  Req,
-  BadRequestException,
-  UseGuards,
+  Delete,
+  Put,
 } from "@nestjs/common";
 import { ReviewService } from "./review.service";
-import { CreateRatingDto } from "src/schemas/review.dto";
-import { CreateCommentDto } from "src/schemas/review.dto";
-import { Request } from "express";
-import { AuthenticatedGuard } from "src/auth/auth.guard";
+import { CreateReviewDto, UpdateReviewDto } from "src/schemas/review.dto";
 
 @Controller("reviews")
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
-
-  @Post("rate")
-  @UseGuards(AuthenticatedGuard)
-  async createOrUpdateRating(@Body() createRatingDto: CreateRatingDto) {
-    console.log("실행");
-    return this.reviewService.createOrUpdateRating({
-      ...createRatingDto,
-    });
+  //소설 생성
+  @Post()
+  create(@Body() createReviewDto: CreateReviewDto) {
+    return this.reviewService.addReview(createReviewDto);
   }
-
-  @Post("comment")
-  async addComment(
-    @Req() req: Request,
-    @Body() createCommentDto: CreateCommentDto
-  ) {
-    const userId = req.user.userId;
-    console.log("Rate Request User ID:", userId); // 콘솔 로그 추가
-
-    if (!userId) {
-      throw new BadRequestException("User is not authenticated");
-    }
-    return this.reviewService.addComment({ ...createCommentDto, userId });
+  //리스트 가져오기
+  @Get()
+  findAll() {
+    return this.reviewService.findAll();
   }
-
-  @Get("/:novelId/user")
-  @UseGuards(AuthenticatedGuard)
-  async findByNovelIdAndUserId(
-    @Req() req: Request,
-    @Param("novelId") novelId: string
-  ) {
-    const userId = req.user.userId;
-
-    if (!userId) {
-      throw new BadRequestException("User is not authenticated");
-    }
-    return this.reviewService.findByNovelIdAndUserId(novelId, userId);
+  //상세
+  @Get(":id")
+  findOne(@Param("id") id: string) {
+    return this.reviewService.findOne(id);
   }
-
-  @Get("/:novelId/comments")
-  @UseGuards(AuthenticatedGuard)
-  async findByNovelIdExcludingUser(
-    @Req() req: Request,
-    @Param("novelId") novelId: string,
-    @Query("page") page = 1,
-    @Query("limit") limit = 10
-  ) {
-    const userId = req.user.userId;
-
-    if (!userId) {
-      throw new BadRequestException("User is not authenticated");
-    }
-    const reviews = await this.reviewService.findByNovelIdExcludingUser(
-      novelId,
-      userId,
-      Number(page),
-      Number(limit)
-    );
-    const total = await this.reviewService.countByNovelIdExcludingUser(
-      novelId,
-      userId
-    );
-    return {
-      reviews,
-      total,
-      page: Number(page),
-      limit: Number(limit),
-    };
+  // 수정
+  @Put(":id")
+  update(@Param("id") id: string, @Body() updateReviewDto: UpdateReviewDto) {
+    return this.reviewService.update(id, updateReviewDto);
+  }
+  //삭제
+  @Delete(":id")
+  remove(@Param("id") id: string) {
+    return this.reviewService.remove(id);
   }
 }

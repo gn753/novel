@@ -1,11 +1,10 @@
-export class CreateCommentDto {
+export class CreateReviewDto {
   novelId: string;
   userId: string;
-  comment: string;
+  score: number;
+  review?: string;
 }
-
-export class CreateRatingDto {
-  novelId: string;
-  userId: string;
-  rating: number;
+export class UpdateReviewDto {
+  score?: number;
+  review?: string;
 }

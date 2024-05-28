@@ -2,6 +2,9 @@ import { IsArray, IsString } from "class-validator";
 
 export class CreateNovelDto {
   @IsString()
+  readonly novelId: string;
+
+  @IsString()
   readonly title: string;
 
   @IsString()
@@ -10,5 +13,7 @@ export class CreateNovelDto {
   @IsArray()
   readonly category: string[];
 
-  readonly image?: string;
+  readonly averageRating: number;
+
+  readonly img?: string;
 }

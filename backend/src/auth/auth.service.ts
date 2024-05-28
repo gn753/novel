@@ -1,7 +1,7 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateUserDto } from 'src/schemas/user/create-user.dto';
-import { UserService } from 'src/user/user.service';
-import * as bcrypt from 'bcrypt';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { CreateUserDto } from "src/schemas/create-user.dto";
+import { UserService } from "src/user/user.service";
+import * as bcrypt from "bcrypt";
 @Injectable()
 export class AuthService {
   constructor(private userService: UserService) {}
@@ -11,8 +11,8 @@ export class AuthService {
 
     if (user) {
       throw new HttpException(
-        '해당 유저가 이미 있습니다.',
-        HttpStatus.BAD_REQUEST,
+        "해당 유저가 이미 있습니다.",
+        HttpStatus.BAD_REQUEST
       );
     }
     //비밀번호 해시화해서 암호화 처리 10솔트
@@ -25,7 +25,7 @@ export class AuthService {
       user.password = undefined;
       return user;
     } catch (error) {
-      throw new HttpException('서버 에러', 500);
+      throw new HttpException("서버 에러", 500);
     }
   }
   //유저 검증
@@ -38,7 +38,7 @@ export class AuthService {
     const userData = user.toJSON(); //json으로 변환시켜서 데이터만추출
     const { password: hashedPassword, ...userInfo } = userData;
     if (bcrypt.compareSync(userDto.password, hashedPassword)) {
-      console.log(userInfo, '뭐지?');
+      console.log(userInfo, "뭐지?");
       return userInfo;
     }
     return null;
